@@ -1,17 +1,18 @@
 #include <stdlib.h>
+#include "dynamic_array.c"
 
 #ifndef DYNAMIC_ARRAY
 #define DYNAMIC_ARRAY
 
 
-//dynamic array
-typedef struct Array{
-    u_int64_t array_length;
-    const char * array_pointer;
-    const u_int64_t capacity;
-    const char * null_frame;
-    const u_int8_t null_frame_size;
-}array;
+////dynamic array
+//typedef struct Array{
+//    u_int64_t array_length;
+//    const char * array_pointer;
+//    const u_int64_t capacity;
+//    const char * null_frame;
+//    const u_int8_t null_frame_size;
+//}array;
 
 
 //TODO: Update dynamic array: ( previous pointer to array, new array capacity ) -> new array with new capacity.

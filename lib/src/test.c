@@ -1,6 +1,6 @@
 #include <time.h>
 #include <string.h>
-#include "dynamic_array.c"
+#include "dynamic_array.h"
 #include <stdio.h>
 
 

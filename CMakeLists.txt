@@ -17,9 +17,14 @@ set(
         main.c
         ${APP_DOMAIN}/dynamic_array.h
         ${SRC_DOMAIN}/dynamic_array.c
+
         ${APP_DOMAIN}/debug.h
         ${SRC_DOMAIN}/debug.c
+
         ${APP_DOMAIN}/test.h
         ${SRC_DOMAIN}/test.c
+
+        ${APP_DOMAIN}/error.h
+        ${SRC_DOMAIN}/error.c
 )
 add_executable(untitled ${SOURCE_FILES})

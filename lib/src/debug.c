@@ -1,6 +1,6 @@
 #include <string.h>
-#include "dynamic_array.c"
 #include <stdio.h>
+#include "dynamic_array.h"
 
 
 typedef struct PERSON_ID {

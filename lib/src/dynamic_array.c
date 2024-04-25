@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
+#include "error.h"
 
 //dynamic array
 typedef struct Array{
@@ -19,12 +20,17 @@ static array * grow(
 
         )
 {
+    char* debug[] = {"Exception in void GROW: DYNAMYC_ARRAY.C"};
+
+    error_pointer(array_p, 1, debug);
 
     u_int64_t _capacity = array_p -> capacity;
     const char * _null_frame = array_p -> null_frame;
     const u_int8_t _null_frame_size = array_p -> null_frame_size;
 
     const char * _new_pointer = malloc((array_p -> null_frame_size)*new_capacity);
+
+    malloc_exception(_new_pointer, 1, debug);
 
     memcpy(_new_pointer, array_p -> array_pointer, (array_p -> null_frame_size)*(array_p -> array_length));
 
@@ -42,6 +48,9 @@ static array * grow(
     };
 
     const char * pointer = malloc(sizeof(new_array));
+
+    malloc_exception(pointer, 1, debug);
+
     memcpy(pointer, &new_array, sizeof(new_array));
 
     return (array *) pointer;
@@ -61,6 +70,10 @@ static array * map(
         )
 {
 
+    char* debug[] = {"Exception in void MAP: DYNAMYC_ARRAY.C"};
+
+    error_pointer(array_p, 1, debug);
+
     u_int64_t _array_length = array_p -> array_length;
     const u_int8_t _null_frame_size = array_p -> null_frame_size;
 
@@ -79,6 +92,8 @@ static array * map(
     }
 
     const char * _new_pointer = malloc((_new_frame_size1)*(array_p -> capacity));
+
+    malloc_exception(_new_pointer, 1, debug);
 
     const char * result;
     u_int64_t _new_array_length = 0;
@@ -107,6 +122,9 @@ static array * map(
     };
 
     const char * pointer = malloc(sizeof(new_array));
+
+    malloc_exception(pointer, 1, debug);
+
     memcpy(pointer, &new_array, sizeof(new_array));
 
     return (array *) pointer;
@@ -126,6 +144,10 @@ static array * where(
         )
 {
 
+    char* debug[] = {"Exception in void WHERE: DYNAMYC_ARRAY.C"};
+
+    error_pointer(array_p, 1, debug);
+
     u_int64_t _new_length = 0;
     u_int64_t _old_length = array_p -> array_length;
     const u_int8_t _null_frame_size = array_p -> null_frame_size;
@@ -133,6 +155,9 @@ static array * where(
     const char * _new_pointer = malloc((array_p -> null_frame_size)*(array_p -> array_length));
 
     const char * _old_pointer = malloc((array_p -> null_frame_size)*(array_p -> array_length));
+
+    malloc_exception(_new_pointer, 1, debug);
+    malloc_exception(_old_pointer, 1, debug);
 
     memcpy(_old_pointer, array_p -> array_pointer, (array_p -> null_frame_size)*(array_p -> array_length));
 
@@ -156,6 +181,9 @@ static array * where(
     };
 
     char * pointer = malloc(sizeof(new_array));
+
+    malloc_exception(pointer, 1, debug);
+
     memcpy(pointer, &new_array, sizeof(new_array));
 
     return (array *) pointer;
@@ -169,6 +197,9 @@ static void free_array(
 
         )
 {
+    char* debug[] = {"Exception in void FREE_ARRAY: DYNAMYC_ARRAY.C"};
+
+    error_pointer(array_p, 1, debug);
 
     free(array_p -> array_pointer);
     free(array_p);
@@ -185,6 +216,11 @@ static array * add_all(
 )
 {
 
+    char* debug[] = {"Exception in void ADD_ALL: DYNAMYC_ARRAY.C"};
+
+    error_pointer(array_first, 1, debug);
+    error_pointer(array_second, 1, debug);
+
     const u_int8_t _null_frame_size = array_first -> null_frame_size;
     const u_int64_t _length_first = array_first -> array_length;
     const u_int64_t _length_second = array_second -> array_length;
@@ -196,6 +232,8 @@ static array * add_all(
     }
 
     char * _new_pointer = malloc(_null_frame_size * (_length_first + _length_second));
+
+    malloc_exception(_new_pointer, 1, debug);
 
     memcpy(_new_pointer, array_first -> array_pointer, _length_first * _null_frame_size);
     memcpy(_new_pointer + _length_first * _null_frame_size, array_second -> array_pointer, _length_second * _null_frame_size);
@@ -210,6 +248,9 @@ static array * add_all(
     };
 
     char * pointer = malloc(sizeof(new_array));
+
+    malloc_exception(pointer, 1, debug);
+
     memcpy(pointer, &new_array, sizeof(new_array));
 
     return (array *) pointer;
@@ -226,6 +267,10 @@ static array * add(
         )
 {
 
+    char* debug[] = {"Exception in void ADD: DYNAMYC_ARRAY.C"};
+
+    error_pointer(array_p, 1, debug);
+
     const array * new_array;
 
     const u_int64_t _capacity = array_p -> capacity;
@@ -239,6 +284,9 @@ static array * add(
     else
     {
         new_array = malloc(sizeof(array));
+
+        malloc_exception(new_array, 1, debug);
+
         memcpy(new_array, array_p, sizeof(array));
     }
     const char * _array_pointer = new_array -> array_pointer;
@@ -258,6 +306,10 @@ static char * get(
         )
 {
 
+    char* debug[] = {"Exception in void GET: DYNAMYC_ARRAY.C"};
+
+    error_pointer(array_p, 1, debug);
+
     const char * element = array_p -> array_pointer + index * array_p -> null_frame_size;
 
     return element;
@@ -273,6 +325,10 @@ static array * delete(
         )
 {
 
+    char* debug[] = {"Exception in void DELETE: DYNAMYC_ARRAY.C"};
+
+    error_pointer(array_p, 1, debug);
+
     const array * new_array;
 
     const u_int64_t _capacity = array_p -> capacity;
@@ -281,6 +337,9 @@ static array * delete(
     const char * _pointer = array_p -> array_pointer;
 
     new_array = malloc(sizeof(array));
+
+    malloc_exception(new_array, 1, debug);
+
     memcpy(new_array, array_p, sizeof(array));
 
     memcpy(new_array -> array_pointer, _pointer, _null_frame_size * (index - 1));
@@ -304,8 +363,14 @@ static array * create_array(
         )
 {
 
+    char* debug[] = {"Exception in void CREATE_ARRAY: DYNAMYC_ARRAY.C"};
+
+    error_pointer(null_frame, 1, debug);
+
     u_int64_t _old_length = array_length;
     const char * _new_pointer = malloc(null_frame_size * array_capacity);
+
+    malloc_exception(_new_pointer, 1, debug);
 
     while(_old_length > 0){
         memcpy(_new_pointer + (array_length - _old_length) * null_frame_size, null_frame, null_frame_size);
@@ -321,6 +386,9 @@ static array * create_array(
     };
 
     char * pointer = malloc(sizeof(new_array));
+
+    malloc_exception(pointer, 1, debug);
+
     memcpy(pointer, &new_array, sizeof(new_array));
 
     return (array *) pointer;
@@ -338,6 +406,11 @@ static void print_array(
 
         )
 {
+
+    char* debug[] = {"Exception in void PRINT_ARRAY: DYNAMYC_ARRAY.C"};
+
+    error_pointer(array_p, 1, debug);
+
     const char * _pointer = array_p -> array_pointer;
     const u_int8_t _null_frame_size = array_p -> null_frame_size;
     const u_int64_t _length = array_p -> array_length;

@@ -77,6 +77,13 @@ build CMakeFiles/untitled.dir/lib/src/test.c.o: C_COMPILER__untitled_unscanned_D
   OBJECT_DIR = CMakeFiles/untitled.dir
   OBJECT_FILE_DIR = CMakeFiles/untitled.dir/lib/src
 
+build CMakeFiles/untitled.dir/lib/src/error.c.o: C_COMPILER__untitled_unscanned_Debug /home/antilopa/CLionProjects/untitled/lib/src/error.c || cmake_object_order_depends_target_untitled
+  DEP_FILE = CMakeFiles/untitled.dir/lib/src/error.c.o.d
+  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
+  INCLUDES = -I/home/antilopa/CLionProjects/untitled/./lib -I/home/antilopa/CLionProjects/untitled/./lib/src
+  OBJECT_DIR = CMakeFiles/untitled.dir
+  OBJECT_FILE_DIR = CMakeFiles/untitled.dir/lib/src
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target untitled
@@ -85,7 +92,7 @@ build CMakeFiles/untitled.dir/lib/src/test.c.o: C_COMPILER__untitled_unscanned_D
 #############################################
 # Link the executable untitled
 
-build untitled: C_EXECUTABLE_LINKER__untitled_Debug CMakeFiles/untitled.dir/main.c.o CMakeFiles/untitled.dir/lib/src/dynamic_array.c.o CMakeFiles/untitled.dir/lib/src/debug.c.o CMakeFiles/untitled.dir/lib/src/test.c.o
+build untitled: C_EXECUTABLE_LINKER__untitled_Debug CMakeFiles/untitled.dir/main.c.o CMakeFiles/untitled.dir/lib/src/dynamic_array.c.o CMakeFiles/untitled.dir/lib/src/debug.c.o CMakeFiles/untitled.dir/lib/src/test.c.o CMakeFiles/untitled.dir/lib/src/error.c.o
   FLAGS = -g
   OBJECT_DIR = CMakeFiles/untitled.dir
   POST_BUILD = :
