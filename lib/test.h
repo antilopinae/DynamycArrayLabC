@@ -3,7 +3,7 @@
 
 
 //TODO: Start tests on dynamic array library.
-extern int start_testing();
+extern void start_testing();
 
 
 #endif

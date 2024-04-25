@@ -49,7 +49,7 @@ void print_element(
 static void _print_array()
 {
 
-    printf("Printing array..\n");
+    printf("\nPrinting array..\n");
     printf("Array size: %d\n", array_p -> array_length);
 
 
