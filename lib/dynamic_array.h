@@ -49,7 +49,7 @@ static array * delete( const array *, const int );
 
 
 //TODO: Return new dynamic array: ( length of new array, length of capacity of new array, pointer to data of nullable array element, size of this element) -> new array witch all elemnts were copied from nullable element.
-static array * create_array( u_int64_t, const u_int64_t, const char *, const u_int8_t );
+static array * create_array( const u_int64_t, const u_int64_t, const char *, const u_int8_t );
 
 
 //TODO: Free dynamic array from the pointer, also free all pointers in it.
@@ -60,7 +60,7 @@ static void free_array( const array * );
 typedef void ( *print )( const char *, const u_int8_t );
 
 //TODO: Prints array and nothing else.
-static void print_array( const array *, print );
+static void print_array( const array *, const print );
 
 
 

@@ -1,6 +1,5 @@
-#include <time.h>
 #include <string.h>
-#include "dynamic_array.h"
+#include "dynamic_array.c"
 #include <stdio.h>
 
 
@@ -49,7 +48,13 @@ void print_element(
 
 static void _print_array()
 {
+
+    printf("Printing array..\n");
+    printf("Array size: %d\n", array_p -> array_length);
+
+
     print_array(array_p, &print_element);
+    printf("\n");
 }
 
 
@@ -78,10 +83,12 @@ static void init_array()
 
 
 
-static int start_debug_example()
+void start_debug_example()
 {
+
     printf("HELLO! There is a debug menu to test dynamic arrays. Wait a little..\n");
-    return 0;
+    printf("\n");
+
 }
 
 
@@ -96,6 +103,7 @@ static void print_person(int index)
     memcpy(pointer, element, array_p -> null_frame_size);
 
     printf("Person first name: %s, last name: %s\n", pointer -> firstName, pointer -> lastName);
+    printf("\n");
 
 }
 
@@ -169,7 +177,7 @@ static void open_person(int index)
     printf("Please enter numbers: \'1\' to change new Person;\n\'0\' to to exit from this menu.\n");
 
     char c;
-    while(c=getchar()!='0'){
+    while((c=getchar())!='0'){
         if( c == '1')
         {
             printf("Go to change this person..\n");
@@ -187,14 +195,14 @@ static void person_menu()
 
     char c;
 
-    while(c=getchar()!='n'){
+    while((c=getchar())!='n'){
         if( c == 'y')
         {
             create_person();
             printf("New person created. Do you want to change his params now?\n");
             printf("Please enter symbols: \'y\' to change params;\n\'n\' to to exit from this menu.\n");
 
-            while(c=getchar()!='n'){
+            while((c=getchar())!='n'){
                 if( c == 'y')
                 {
                     printf("\nChange person..\n");
@@ -256,7 +264,7 @@ static void print_menu(char c)
 }
 
 
-static int start_debugging()
+void start_debugging()
 {
 
     printf("...Debug program started, please enter the numbers from the keyboard for testing..\n");
@@ -267,12 +275,11 @@ static int start_debugging()
 
     char c;
 
-    while(c=getchar()!='q'){
+    while((c=getchar())!='q'){
         if(c=='i' || c=='0' || c=='1' || c == '2' || c == '3')
         {
             print_menu(c);
         }
     }
 
-    return 0;
 }
