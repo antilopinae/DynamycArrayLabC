@@ -5,7 +5,7 @@
 
 
 
-void print_message(int argc, char * argv[])
+void print_message(const int argc, const char * argv[])
 {
 
     for (int i = 0; i < argc; i++)
@@ -17,7 +17,7 @@ void print_message(int argc, char * argv[])
 
 
 
-void null_pointer_exception(int argc, char * argv[])
+void null_pointer_exception(const int argc, const char * argv[])
 {
 
     print_message(argc, argv);
@@ -27,7 +27,7 @@ void null_pointer_exception(int argc, char * argv[])
 
 
 
-void error_pointer(char * pointer, int argc, char * argv[])
+void error_pointer(const char * pointer, const int argc, const char * argv[])
 {
     if(!pointer)
     {
@@ -37,7 +37,7 @@ void error_pointer(char * pointer, int argc, char * argv[])
 
 
 
-void malloc_exception(char * pointer, int argc, char * argv[])
+void malloc_exception(const char * pointer, const int argc, const char * argv[])
 {
 
     if(!pointer)
@@ -51,7 +51,7 @@ void malloc_exception(char * pointer, int argc, char * argv[])
 
 
 
-void something_went_wrong(int argc, char * argv[])
+void something_went_wrong(const int argc, const char * argv[])
 {
 
     print_message(argc, argv);

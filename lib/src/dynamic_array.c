@@ -77,17 +77,20 @@ static array * map(
     u_int64_t _array_length = array_p -> array_length;
     const u_int8_t _null_frame_size = array_p -> null_frame_size;
 
-    const char * _old_pointer = malloc((array_p -> null_frame_size)*(array_p -> capacity));
+    const char * _old_pointer = malloc(_null_frame_size*(array_p -> capacity));
 
-    memcpy(_old_pointer, array_p -> array_pointer, (array_p -> null_frame_size)*(array_p -> array_length));
+    memcpy(_old_pointer, array_p -> array_pointer, _null_frame_size*_array_length);
 
-    const u_int8_t _new_frame_size1;
-    const u_int8_t _new_frame_size2;
+    u_int8_t _new_frame_size1;
+    u_int8_t _new_frame_size2;
 
     operation(_old_pointer, _null_frame_size, &_new_frame_size1);
 
+    char* debug2 = {"Error with size of elements in new array"};
+
     if(_new_frame_size1 <1 )
     {
+        print_message(1, debug2);
         exit(0);
     }
 
@@ -100,17 +103,19 @@ static array * map(
 
     char * __old_pointer = _old_pointer;
 
+
     while(_array_length > 0)
     {
         result = operation(__old_pointer, _null_frame_size, &_new_frame_size2);
         if(_new_frame_size2 != _new_frame_size1)
         {
+            print_message(1, debug2);
             exit(0);
         }
-        memcpy(_new_pointer+_new_array_length * _new_frame_size1, result, _new_frame_size1);
+        memcpy(_new_pointer + _new_array_length * _new_frame_size1, result, _new_frame_size1);
         --_array_length;
         ++_new_array_length;
-        __old_pointer += _new_frame_size1;
+        __old_pointer += (_null_frame_size);
     }
 
     const array new_array = {
@@ -271,29 +276,30 @@ static array * add(
 
     error_pointer(array_p, 1, debug);
 
-    const array * new_array;
-
     const u_int64_t _capacity = array_p -> capacity;
     const u_int64_t _length = array_p -> array_length;
     const u_int8_t _null_frame_size = array_p -> null_frame_size;
 
-    if(_capacity < _length + 1)
-    {
-        new_array = grow(array_p, array_p -> capacity * 2);
-    }
-    else
-    {
-        new_array = malloc(sizeof(array));
+    const char * _array_pointer = malloc(_null_frame_size * (_length+1));
 
-        malloc_exception(new_array, 1, debug);
+    memcpy(_array_pointer, array_p -> array_pointer, _null_frame_size * _length);
+    memcpy(_array_pointer + _null_frame_size * _length, el_p, _null_frame_size);
 
-        memcpy(new_array, array_p, sizeof(array));
-    }
-    const char * _array_pointer = new_array -> array_pointer;
+    array new_array = {
+            .array_length = _length + 1,
+            .array_pointer = _array_pointer,
+            .capacity = array_p -> capacity + 1,
+            .null_frame = array_p -> null_frame,
+            .null_frame_size = _null_frame_size
+    };
 
-    memcpy(_array_pointer + _length * _null_frame_size, el_p, _null_frame_size);
+    char * pointer = malloc(sizeof(new_array));
 
-    return new_array;
+    malloc_exception(pointer, 1, debug);
+
+    memcpy(pointer, &new_array, sizeof(new_array));
+
+    return (array *) pointer;
 }
 
 

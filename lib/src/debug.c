@@ -3,26 +3,15 @@
 #include "dynamic_array.h"
 
 
-typedef struct PERSON_ID {
-    int series;
-    int number;
-}person_id;
-
-
 
 typedef struct Person{
-    person_id id;
     char* firstName;
     char* lastName;
 }person;
 
 
 
-static array * array_p;
-
-
-
-void print_element(
+static void print_element(
 
         const char * element,
         const u_int8_t null_frame_size
@@ -46,7 +35,12 @@ void print_element(
 
 
 
-static void _print_array()
+static void _print_array(
+
+
+        const array * array_p
+
+        )
 {
 
     printf("\nPrinting array..\n");
@@ -59,15 +53,10 @@ static void _print_array()
 
 
 
-static void init_array()
+static array ** init_array()
 {
 
-    person_id person_id1 = {
-            .number = 0,
-            .series = 0
-    };
     person person1 = {
-            .id = person_id1,
             .firstName = "Admin",
             .lastName = "Tester"
     };
@@ -75,10 +64,11 @@ static void init_array()
 
     memcpy(pointer, &person1, sizeof(person));
 
-    array_p = create_array(1, 20, pointer, sizeof(person));
+    array * array_p = create_array(4, 20, pointer, sizeof(person));
 
-    _print_array();
+    _print_array(array_p);
 
+    return &array_p;
 }
 
 
@@ -93,7 +83,24 @@ void start_debug_example()
 
 
 
-static void print_person(int index)
+enum menu
+{
+    STANDART_MENU,
+    CHOOSE_PERSON_MENU,
+    CREATE_PERSON_MENU,
+    CHANGE_PERSON_MENU,
+    DELETE_PERSON_MENU,
+    EXIT_MENU
+};
+
+
+
+static void print_person(
+
+        int index,
+        const array * array_p
+
+        )
 {
 
     char * element = get(array_p, index);
@@ -109,105 +116,97 @@ static void print_person(int index)
 
 
 
-static void change_person(int index)
+
+static void create_person(
+
+        const array * array_p
+
+        )
 {
-
-    char * first_name;
-    char * last_name;
-
-    printf("Please input first name of person:\n");
-
-    scanf("%s", first_name);
-
-    printf("Please input last name of person:\n");
-
-    scanf("%s", last_name);
-
-    person_id person_id1 = {
-            .number = 0,
-            .series = 0
-    };
     person person1 = {
-            .id = person_id1,
-            .firstName = first_name,
-            .lastName = last_name
-    };
-    char * pointer = malloc(sizeof(person));
-
-    memcpy(pointer, &person1, sizeof(person));
-
-    array_p = delete(array_p, index);
-    array_p = add(array_p, pointer);
-
-    printf("Sorry passport id is a secret information!\n");
-
-    _print_array();
-
-}
-
-
-
-static void create_person()
-{
-
-    person_id person_id1 = {
-            .number = 0,
-            .series = 0
-    };
-    person person1 = {
-            .id = person_id1,
-            .firstName = "Tester",
+            .firstName = "Admin",
             .lastName = "Tester"
     };
+
     char * pointer = malloc(sizeof(person));
 
     memcpy(pointer, &person1, sizeof(person));
 
-    array_p = add(array_p, pointer);
+    array * _array_p = add(array_p, pointer);
+    free_array(array_p);
 
-    change_person(array_p -> array_length -1);
 
 }
 
-static void open_person(int index)
+
+static enum menu delete_person_menu(
+
+        int input,
+        const array ** array_p
+
+)
+{
+
+}
+
+
+
+static enum menu change_person_menu(
+
+        int input,
+        const array ** array_p
+
+)
 {
 
     printf("Okay, you selected the person, now I'm print him...\n");
-    print_person(index);
+    print_person(index, array_p);
     printf("Please enter numbers: \'1\' to change new Person;\n\'0\' to to exit from this menu.\n");
 
     char c;
-    while((c=getchar())!='0'){
+    scanf("%c", &c);
+    while(c!='0'){
         if( c == '1')
         {
             printf("Go to change this person..\n");
-            change_person(index);
+            change_person(index, array_p);
             return;
         }
+        scanf("%c", &c);
     }
 
 }
 
-static void person_menu()
+
+
+static enum menu create_person_menu(
+
+        int input,
+        const array ** array_p
+
+)
 {
 
     printf("Please enter numbers: \'y\' to create new Person;\n\'n\' to to exit from this menu.\n");
 
-    char c;
 
-    while((c=getchar())!='n'){
+
+    while(c!='n'){
         if( c == 'y')
         {
-            create_person();
+            create_person(array_p);
             printf("New person created. Do you want to change his params now?\n");
             printf("Please enter symbols: \'y\' to change params;\n\'n\' to to exit from this menu.\n");
 
-            while((c=getchar())!='n'){
+            scanf("%c", &c);
+
+            while(c!='n'){
                 if( c == 'y')
                 {
                     printf("\nChange person..\n");
-                    open_person(array_p -> array_length -1);
+                    open_person(array_p -> array_length - 1, array_p);
                 }
+                scanf("%c", &c);
             }
             return;
         }
@@ -216,44 +215,53 @@ static void person_menu()
 }
 
 
-static void select_person()
+
+static enum menu choose_person_menu(
+
+        int input,
+        const array ** array_p
+
+)
 {
 
-    _print_array();
+    _print_array(array_p);
 
     printf("Please input correct number of person:\n");
-
-    char c;
-    c=(int)getchar();
-    while(c<0 || c > array_p -> array_length){
-        printf("Please input correct number of person:\n");
-
-        c=(int)getchar();
-    }
-    open_person(c);
 
 }
 
 
-static void print_menu(char c)
+
+static enum menu standart_menu(
+
+        int input,
+        const array ** array_p
+
+)
 {
 
-    if(c=='0')
+    enum menu _menu;
+
+    if(input == 0)
     {
         printf("\n Creating new Person...\n");
-        person_menu();
+        _menu = CREATE_PERSON_MENU;
+        return _menu;
     }
-    else if( c == '1' )
+    else if( input == 1 )
     {
-        select_person();
+        _menu = CHOOSE_PERSON_MENU;
+        return _menu;
     }
-    else if( c == '2' )
+    else if( input == 2 )
     {
         printf("You didn't select person.\n");
     }
-    else if( c == '3' )
+    else if( input == 3 )
     {
-        _print_array();
+        _print_array(*array_p);
+        _menu = STANDART_MENU;
+        return _menu;
     }
     else
     {
@@ -264,22 +272,66 @@ static void print_menu(char c)
 }
 
 
+
+typedef enum menu (*open_menu)(int, array **);
+
+
+
+static open_menu get_menu(
+
+        enum menu _menu
+
+)
+{
+    switch (_menu)
+    {
+        case STANDART_MENU: return &standart_menu;
+        case CHOOSE_PERSON_MENU: return &choose_person_menu;
+        case CREATE_PERSON_MENU: return &create_person_menu;
+        case CHANGE_PERSON_MENU: return &change_person_menu;
+        case DELETE_PERSON_MENU: return &delete_person_menu;
+        case EXIT_MENU: return &standart_menu;
+    }
+}
+
+
+
+static int get_input()
+{
+    char *line = NULL;
+    size_t len = 0;
+    ssize_t read;
+
+    read = getline(&line, &len, stdin);
+
+    while(read == -1){
+        read = getline(&line, &len, stdin);
+    }
+
+    int c = strtol(line, NULL, 10);
+
+    free(line);
+
+    return c;
+}
+
+
+
 void start_debugging()
 {
 
     printf("...Debug program started, please enter the numbers from the keyboard for testing..\n");
 
-    init_array();
+    const array ** array_p = init_array();
 
-    print_menu('c');
+    enum menu _menu = STANDART_MENU;
 
-    char c;
-
-    while((c=getchar())!='q'){
-        if(c=='i' || c=='0' || c=='1' || c == '2' || c == '3')
+    while(1){
+        if(_menu == EXIT_MENU)
         {
-            print_menu(c);
+            return;
         }
+        _menu = get_menu(_menu)(get_input(), array_p);
     }
 
 }
