@@ -335,26 +335,29 @@ static array * delete(
 
     error_pointer(array_p, 1, debug);
 
-    const array * new_array;
-
-    const u_int64_t _capacity = array_p -> capacity;
     const u_int64_t _length = array_p -> array_length;
     const u_int8_t _null_frame_size = array_p -> null_frame_size;
     const char * _pointer = array_p -> array_pointer;
 
-    new_array = malloc(sizeof(array));
+    const u_int8_t _len = (index) * _null_frame_size;
 
-    malloc_exception(new_array, 1, debug);
+    memcpy(_pointer + _len, _pointer + _len - _null_frame_size, (_length-_len-1)*_null_frame_size);
 
-    memcpy(new_array, array_p, sizeof(array));
+    array new_array = {
+            .array_length = array_p -> array_length -1,
+            .array_pointer = _pointer,
+            .capacity = array_p -> capacity,
+            .null_frame = array_p -> null_frame,
+            .null_frame_size = array_p -> null_frame_size
+    };
 
-    memcpy(new_array -> array_pointer, _pointer, _null_frame_size * (index - 1));
+    char * pointer = malloc(sizeof(new_array));
 
-    const u_int8_t _len = (index+1) * _null_frame_size;
+    malloc_exception(pointer, 1, debug);
 
-    memcpy(new_array -> array_pointer + _len, _pointer + _len, _null_frame_size * (_length - index - 1));
+    memcpy(pointer, &new_array, sizeof(new_array));
 
-    return new_array;
+    return (array *) pointer;
 }
 
 
