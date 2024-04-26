@@ -102,7 +102,7 @@ static void __print_array(
     printf("Array size: %d\n", (*array_p) -> array_length);
     if((*array_p) -> array_length <= 0)
     {
-        init_array(array_p);
+        *array_p = *init_array();
     }
 
     print_array((*array_p), &print_element);
@@ -473,10 +473,12 @@ static char* get_input()
         read = getline(&line, &len, stdin);
     }
 
+    line[strlen(line) - 1] = 0;
+
     char * pointer = malloc(sizeof(char)*len);
 
-    memcpy(pointer, line, (len-3)*sizeof(char));
-    memcpy(pointer+len * sizeof(char), line + (len-1) * sizeof(char), sizeof(char));
+    memcpy(pointer, line, (strlen(line))*sizeof(char));
+
 
     free(line);
 

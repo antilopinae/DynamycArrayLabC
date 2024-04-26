@@ -277,10 +277,11 @@ static array * add(
     error_pointer(array_p, 1, debug);
 
     const u_int64_t _capacity = array_p -> capacity;
+    const char * _null_frame = array_p -> null_frame;
     const u_int64_t _length = array_p -> array_length;
     const u_int8_t _null_frame_size = array_p -> null_frame_size;
 
-    const char * _array_pointer = malloc(_null_frame_size * (_length+1));
+    const char * _array_pointer = malloc(_null_frame_size * (_capacity+1));
 
     memcpy(_array_pointer, array_p -> array_pointer, _null_frame_size * _length);
     memcpy(_array_pointer + _null_frame_size * _length, el_p, _null_frame_size);
@@ -288,8 +289,8 @@ static array * add(
     array new_array = {
             .array_length = _length + 1,
             .array_pointer = _array_pointer,
-            .capacity = array_p -> capacity + 1,
-            .null_frame = array_p -> null_frame,
+            .capacity = _capacity + 1,
+            .null_frame = _null_frame,
             .null_frame_size = _null_frame_size
     };
 
