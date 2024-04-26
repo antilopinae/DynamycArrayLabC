@@ -18,7 +18,7 @@ static array * grow(
         const array * array_p,
         const u_int64_t new_capacity
 
-        )
+)
 {
     char* debug[] = {"Exception in void GROW: DYNAMYC_ARRAY.C"};
 
@@ -67,7 +67,7 @@ static array * map(
         const array * array_p,
         const unary_operation operation
 
-        )
+)
 {
 
     char* debug[] = {"Exception in void MAP: DYNAMYC_ARRAY.C"};
@@ -146,7 +146,7 @@ static array * where(
         const array * array_p,
         const unary_condition condition
 
-        )
+)
 {
 
     char* debug[] = {"Exception in void WHERE: DYNAMYC_ARRAY.C"};
@@ -200,7 +200,7 @@ static void free_array(
 
         const array * array_p
 
-        )
+)
 {
     char* debug[] = {"Exception in void FREE_ARRAY: DYNAMYC_ARRAY.C"};
 
@@ -269,7 +269,7 @@ static array * add(
         const array * array_p,
         const char * el_p
 
-        )
+)
 {
 
     char* debug[] = {"Exception in void ADD: DYNAMYC_ARRAY.C"};
@@ -309,7 +309,7 @@ static char * get(
         const array * array_p,
         const int index
 
-        )
+)
 {
 
     char* debug[] = {"Exception in void GET: DYNAMYC_ARRAY.C"};
@@ -328,7 +328,7 @@ static array * delete(
         const array * array_p,
         const int index
 
-        )
+)
 {
 
     char* debug[] = {"Exception in void DELETE: DYNAMYC_ARRAY.C"};
@@ -366,7 +366,7 @@ static array * create_array(
         const char * null_frame,
         const u_int8_t null_frame_size
 
-        )
+)
 {
 
     char* debug[] = {"Exception in void CREATE_ARRAY: DYNAMYC_ARRAY.C"};
@@ -410,7 +410,7 @@ static void print_array(
         const array * array_p,
         const print print_output
 
-        )
+)
 {
 
     char* debug[] = {"Exception in void PRINT_ARRAY: DYNAMYC_ARRAY.C"};

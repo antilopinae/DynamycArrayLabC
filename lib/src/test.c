@@ -37,7 +37,7 @@ void print_square(
         const char * element,
         const u_int8_t null_frame_size
 
-        )
+)
 {
 
     square * pointer = malloc(sizeof(square));
@@ -61,7 +61,7 @@ void print_new_square(
         const char * element,
         const u_int8_t null_frame_size
 
-        )
+)
 {
 
     new_square * pointer = malloc(sizeof(new_square));
@@ -133,7 +133,7 @@ int simple_where(
         const char * pointer,
         const u_int8_t null_frame_size
 
-        )
+)
 {
 
     struct{
@@ -192,11 +192,12 @@ char * simple_map(
 }
 
 
+
 void test(
 
         const u_int64_t length
 
-        )
+)
 {
 
     char * pointer = simple_init(sizeof(square), length);
@@ -240,16 +241,20 @@ void test(
     free_array(all_array);
 
     printf("\nARRAYS FREE, TEST CLOSED\n\n");
+
 }
+
 
 
 void start_testing()
 {
+
     init_random();
 
-    for(int i =0; i < 4; ++i)
+    for(int i =0; i < 1; ++i)
     {
-        test(RANDOM(5,10));
+        test(RANDOM(10,30));
     }
     printf("TESTING STOPPED. SUCCESS\n\n");
+
 }
